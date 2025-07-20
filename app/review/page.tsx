@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -75,13 +75,7 @@ export default function ReviewPage() {
   const [showFilters, setShowFilters] = useState(false)
   const [reviewNotes, setReviewNotes] = useState("")
 
-  useEffect(() => {
-    fetchReviewLogs()
-    const interval = setInterval(fetchReviewLogs, 30000)
-    return () => clearInterval(interval)
-  }, [filters, searchTerm])
-
-  const fetchReviewLogs = async () => {
+  const fetchReviewLogs = useCallback(async () => {
     try {
       const queryParams = new URLSearchParams()
       // Add filters to query params
@@ -111,7 +105,13 @@ export default function ReviewPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [filters, searchTerm])
+
+  useEffect(() => {
+    fetchReviewLogs()
+    const interval = setInterval(fetchReviewLogs, 30000)
+    return () => clearInterval(interval)
+  }, [fetchReviewLogs])
 
   const handleRefresh = async () => {
     setRefreshing(true)
@@ -488,7 +488,7 @@ export default function ReviewPage() {
                                   </span>
                                 </div>
                                 <div className="flex justify-between">
-                                  <span className="text-slate-600">��หล��งที่มา:</span>
+                                  <span className="text-slate-600">แหล่งที่มา:</span>
                                   <span className="font-medium truncate ml-2">{log.source}</span>
                                 </div>
                                 <div className="flex justify-between">

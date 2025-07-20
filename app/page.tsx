@@ -1,5 +1,4 @@
 "use client"
-
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -21,7 +20,6 @@ export default function Page() {
                 Fake<span className="text-blue-400">Sense</span>
               </span>
             </div>
-
             {/* Navigation Links */}
             <div className="hidden md:flex items-center space-x-6">
               <a href="#features" className="text-gray-300 hover:text-white font-medium transition-colors text-sm">
@@ -37,7 +35,6 @@ export default function Page() {
                 Support
               </a>
             </div>
-
             {/* CTA Button */}
             <Link href="/dashboard">
               <Button className="bg-white hover:bg-gray-100 text-black px-4 py-1.5 rounded-full font-medium text-sm h-8">
@@ -63,7 +60,6 @@ export default function Page() {
                 FakeSense ให้คุณเครื่องมือและระบบ AI ที่คุณต้องการเพื่อสร้างระบบป้องกันการฉ้อโกงออนไลน์ที่มีประสิทธิภาพสูง
               </p>
             </div>
-
             <div className="flex flex-col sm:flex-row gap-4">
               <Link href="/dashboard">
                 <Button
@@ -88,7 +84,6 @@ export default function Page() {
                 </Button>
               </Link>
             </div>
-
             {/* Trust Indicators */}
             <div className="flex items-center space-x-12 pt-12">
               <div className="text-center">
@@ -126,7 +121,6 @@ export default function Page() {
                     </div>
                   </div>
                 </div>
-
                 {/* Dashboard Content */}
                 <div className="p-6">
                   {/* Welcome Message */}
@@ -134,7 +128,6 @@ export default function Page() {
                     <h3 className="text-lg font-semibold text-gray-900 mb-1">สวัสดี Admin</h3>
                     <p className="text-sm text-gray-600">นี่คือสิ่งที่เกิดขึ้นกับระบบของคุณวันนี้</p>
                   </div>
-
                   {/* Stats Cards */}
                   <div className="grid grid-cols-3 gap-4 mb-6">
                     <div className="bg-green-50 p-4 rounded-xl">
@@ -153,7 +146,6 @@ export default function Page() {
                       <div className="text-xs text-purple-600">→ 0%</div>
                     </div>
                   </div>
-
                   {/* Chart Area */}
                   <div className="bg-gray-50 rounded-xl p-4 mb-6">
                     <div className="flex items-center justify-between mb-4">
@@ -170,7 +162,6 @@ export default function Page() {
                       ))}
                     </div>
                   </div>
-
                   {/* Recent Activity */}
                   <div>
                     <h4 className="font-semibold text-gray-900 mb-3">กิจกรรมล่าสุด</h4>
@@ -201,7 +192,6 @@ export default function Page() {
                 </div>
               </div>
             </div>
-
             {/* Floating Elements */}
             <div className="absolute -top-4 -left-4 bg-white rounded-xl shadow-lg p-4 border border-gray-100">
               <div className="flex items-center space-x-2">
@@ -228,7 +218,6 @@ export default function Page() {
               ระบบ AI ที่ทันสมัยที่สุดสำหรับการตรวจจับและป้องกันการฉ้อโกงออนไลน์
             </p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
               <CardContent className="p-10 text-center">
@@ -239,7 +228,6 @@ export default function Page() {
                 <p className="text-gray-600 leading-relaxed text-lg">วิเคราะห์ข้อมูลแบบเรียลไทม์ พร้อมกราฟและสถิติที่ครบครัน</p>
               </CardContent>
             </Card>
-
             <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
               <CardContent className="p-10 text-center">
                 <div className="w-20 h-20 bg-green-100 rounded-3xl flex items-center justify-center mx-auto mb-8">
@@ -251,7 +239,6 @@ export default function Page() {
                 </p>
               </CardContent>
             </Card>
-
             <Card className="border-0 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 bg-gradient-to-br from-purple-50 to-indigo-50 border-2 border-purple-200">
               <CardContent className="p-10 text-center">
                 <div className="w-20 h-20 bg-gradient-to-r from-purple-500 to-indigo-500 rounded-3xl flex items-center justify-center mx-auto mb-8">
@@ -290,7 +277,6 @@ export default function Page() {
                   ระบบ AI Chatbot ที่ฉลาดที่สุด แฝงตัวเป็นลูกค้าเพื่อสนทนากับผู้ต้องสงสัย เก็บหลักฐานการฉ้อโกงอย่างเป็นระบบและปลอดภัย
                 </p>
               </div>
-
               <div className="space-y-6">
                 <div className="flex items-start space-x-6">
                   <div className="w-12 h-12 bg-blue-100 rounded-2xl flex items-center justify-center flex-shrink-0 mt-2">
@@ -326,7 +312,6 @@ export default function Page() {
                   </div>
                 </div>
               </div>
-
               <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
                 <div className="flex items-center space-x-4 mb-6">
                   <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
@@ -372,7 +357,6 @@ export default function Page() {
                     </div>
                   </div>
                 </div>
-
                 {/* Chat Messages */}
                 <div className="p-6 space-y-4 h-96 overflow-y-auto bg-gray-50">
                   {/* Scammer Message */}
@@ -382,7 +366,6 @@ export default function Page() {
                       <span className="text-xs text-gray-500 mt-1 block">ผู้ต้องสงสัย • 14:32</span>
                     </div>
                   </div>
-
                   {/* AI Response */}
                   <div className="flex justify-end">
                     <div className="bg-blue-600 text-white rounded-2xl rounded-tr-md px-4 py-3 max-w-xs">
@@ -390,7 +373,6 @@ export default function Page() {
                       <span className="text-xs text-blue-200 mt-1 block">AI Agent • 14:33</span>
                     </div>
                   </div>
-
                   {/* Scammer Message with Evidence */}
                   <div className="flex justify-start">
                     <div className="bg-white rounded-2xl rounded-tl-md px-4 py-3 max-w-xs shadow-sm border-l-4 border-red-400">
@@ -400,7 +382,6 @@ export default function Page() {
                       <span className="text-xs text-red-600 mt-1 block font-medium">🚨 หลักฐาน: เลขบัญชี</span>
                     </div>
                   </div>
-
                   {/* AI Response */}
                   <div className="flex justify-end">
                     <div className="bg-blue-600 text-white rounded-2xl rounded-tr-md px-4 py-3 max-w-xs">
@@ -408,7 +389,6 @@ export default function Page() {
                       <span className="text-xs text-blue-200 mt-1 block">AI Agent • 14:35</span>
                     </div>
                   </div>
-
                   {/* Evidence Collection Indicator */}
                   <div className="flex justify-center">
                     <div className="bg-green-100 text-green-800 px-4 py-2 rounded-full text-xs font-medium">
@@ -416,7 +396,6 @@ export default function Page() {
                     </div>
                   </div>
                 </div>
-
                 {/* Chat Input (Disabled) */}
                 <div className="border-t border-gray-200 p-4">
                   <div className="flex items-center space-x-3">
@@ -429,7 +408,6 @@ export default function Page() {
                   </div>
                 </div>
               </div>
-
               {/* Floating Evidence Cards */}
               <div className="absolute -top-4 -left-4 bg-white rounded-xl shadow-lg p-3 border border-gray-100">
                 <div className="flex items-center space-x-2">
@@ -461,25 +439,21 @@ export default function Page() {
             <h2 className="text-5xl font-bold text-gray-900 mb-6">วิธีการทำงาน</h2>
             <p className="text-2xl text-gray-600 font-light">กระบวนการที่เป็นระบบและมีประสิทธิภาพ</p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
             {[
               { num: "1", title: "รับแจ้งเหตุ", desc: "ผู้ใช้แจ้งหรือสแกนอัตโนมัติ", icon: Search },
               { num: "2", title: "วิเคราะห์ AI", desc: "ประเมินระดับความเสี่ยง", icon: BarChart3 },
               { num: "3", title: "AI ล่อซื้อ", desc: "เก็บหลักฐานแอบแฝง", icon: Eye },
               { num: "4", title: "ส่งต่อข้อมูล", desc: "รายงานไปตำรวจไซเบอร์", icon: FileText },
-            ].map((step, index) => {
-              const IconComponent = step.icon
-              return (
-                <div key={index} className="text-center">
-                  <div className="w-20 h-20 bg-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-8">
-                    <span className="text-white font-bold text-2xl">{step.num}</span>
-                  </div>
-                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">{step.title}</h3>
-                  <p className="text-gray-600 text-lg">{step.desc}</p>
+            ].map((step, index) => (
+              <div key={index} className="text-center">
+                <div className="w-20 h-20 bg-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-8">
+                  <span className="text-white font-bold text-2xl">{step.num}</span>
                 </div>
-              )
-            })}
+                <h3 className="text-2xl font-semibold text-gray-900 mb-4">{step.title}</h3>
+                <p className="text-gray-600 text-lg">{step.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -526,7 +500,7 @@ export default function Page() {
               </span>
             </div>
             <p className="text-gray-400 mb-3 text-lg">ระบบตรวจจับเพจปลอม Facebook ด้วย AI</p>
-            <p className="text-base text-gray-500">พัฒนาโดย Team "fight for นายช" • Hackathon 2025</p>
+            <p className="text-base text-gray-500">พัฒนาโดย Team &quot;fight for นายช&quot; • Hackathon 2025</p>
           </div>
         </div>
       </footer>

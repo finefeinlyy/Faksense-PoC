@@ -1,16 +1,44 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Define interfaces for type safety
+interface AIAnalysis {
+  suspiciousPatterns: string[]
+  recommendation: string
+  confidence: number
+}
+
+interface DecoyResults {
+  accountNumbers: string[]
+  suspiciousMessages: string[]
+  evidenceScreenshots: string[]
+}
+
+interface Submission {
+  caseId: string
+  url: string
+  reporterName: string
+  description: string
+  evidenceFiles: string[]
+  status: string
+  createdAt: string
+  riskScore: number | null
+  riskLevel?: string
+  aiAnalysis: AIAnalysis | null
+  humanReview: unknown | null
+  updatedAt?: string
+  decoyResults?: DecoyResults
+}
+
 // Mock database (in real app, use actual database)
-const submissions: any[] = []
+const submissions: Submission[] = []
 
 export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData()
-    
     const url = formData.get('url') as string
     const reporterName = formData.get('reporterName') as string
     const description = formData.get('description') as string
-    
+
     // Validate URL
     if (!url) {
       return NextResponse.json(
@@ -31,7 +59,6 @@ export async function POST(request: NextRequest) {
     // Process uploaded files
     const evidenceFiles: string[] = []
     const entries = Array.from(formData.entries())
-    
     for (const [key, value] of entries) {
       if (key.startsWith('evidence_') && value instanceof File) {
         // In real app, save file to storage (AWS S3, etc.)
@@ -41,9 +68,9 @@ export async function POST(request: NextRequest) {
 
     // Generate case ID
     const caseId = `CASE-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
-    
+
     // Create submission record
-    const submission = {
+    const submission: Submission = {
       caseId,
       url,
       reporterName: reporterName || 'Anonymous',
@@ -71,7 +98,6 @@ export async function POST(request: NextRequest) {
       message: 'ระบบได้รับข้อมูลแล้ว กำลังดำเนินการวิเคราะห์',
       estimatedTime: '5-10 นาที',
     })
-
   } catch (error) {
     console.error('Submission error:', error)
     return NextResponse.json(
@@ -105,7 +131,7 @@ export async function GET(request: NextRequest) {
 }
 
 // Simulate AI analysis process
-async function simulateAnalysis(caseId: string) {
+async function simulateAnalysis(caseId: string): Promise<void> {
   const submission = submissions.find(s => s.caseId === caseId)
   if (!submission) return
 
@@ -144,12 +170,12 @@ async function simulateAnalysis(caseId: string) {
 }
 
 // Simulate AI decoy interaction
-async function simulateDecoyInteraction(caseId: string) {
+async function simulateDecoyInteraction(caseId: string): Promise<void> {
   const submission = submissions.find(s => s.caseId === caseId)
   if (!submission) return
 
   submission.status = 'ai-decoy-active'
-  
+
   // Simulate decoy interaction delay
   await new Promise(resolve => setTimeout(resolve, 8000))
 

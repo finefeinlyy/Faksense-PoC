@@ -1,6 +1,5 @@
 "use client"
-
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -41,13 +40,13 @@ interface ScanResult {
 
 export default function ScannerPage() {
   const [activeTab, setActiveTab] = useState<"manual" | "auto">("manual")
-
+  
   // Manual scan states
   const [url, setUrl] = useState("")
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<ScanResult | null>(null)
   const [error, setError] = useState("")
-
+  
   // Auto scan states
   const [autoConfig, setAutoConfig] = useState({
     enabled: false,
@@ -63,49 +62,52 @@ export default function ScannerPage() {
   })
   const [newKeyword, setNewKeyword] = useState("")
 
+  // Auto scan function wrapped in useCallback
+  const performAutoScan = useCallback(async () => {
+    try {
+      const response = await fetch("/api/auto-scan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ keywords: autoConfig.keywords }),
+      })
+      if (response.ok) {
+        const newResults = await response.json()
+        setAutoResults((prev) => [...newResults, ...prev].slice(0, 20))
+        // Update stats
+        newResults.forEach((result: ScanResult) => {
+          setAutoStats((prev) => ({
+            total: prev.total + 1,
+            high: prev.high + (result.riskLevel === "High" ? 1 : 0),
+            medium: prev.medium + (result.riskLevel === "Medium" ? 1 : 0),
+            low: prev.low + (result.riskLevel === "Low" ? 1 : 0),
+          }))
+        })
+      }
+    } catch (error) {
+      console.error("Auto scan error:", error)
+    }
+  }, [autoConfig.keywords])
+
   // Auto scan interval
   useEffect(() => {
     if (!autoConfig.enabled) return
 
+    // Run immediately when enabled
+    performAutoScan()
+
     const interval = setInterval(
-      async () => {
-        try {
-          const response = await fetch("/api/auto-scan", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ keywords: autoConfig.keywords }),
-          })
-
-          if (response.ok) {
-            const newResults = await response.json()
-            setAutoResults((prev) => [...newResults, ...prev].slice(0, 20))
-
-            // Update stats
-            newResults.forEach((result: ScanResult) => {
-              setAutoStats((prev) => ({
-                total: prev.total + 1,
-                high: prev.high + (result.riskLevel === "High" ? 1 : 0),
-                medium: prev.medium + (result.riskLevel === "Medium" ? 1 : 0),
-                low: prev.low + (result.riskLevel === "Low" ? 1 : 0),
-              }))
-            })
-          }
-        } catch (error) {
-          console.error("Auto scan error:", error)
-        }
-      },
+      performAutoScan,
       autoConfig.interval * 60 * 1000,
     )
 
     return () => clearInterval(interval)
-  }, [autoConfig.enabled, autoConfig.interval, autoConfig.keywords])
+  }, [autoConfig.enabled, autoConfig.interval, performAutoScan])
 
   const handleManualScan = async () => {
     if (!url.trim()) {
       setError("กรุณาใส่ URL")
       return
     }
-
     if (!url.includes("facebook.com")) {
       setError("รองรับเฉพาะ Facebook เท่านั้น")
       return
@@ -128,7 +130,7 @@ export default function ScannerPage() {
 
       const data = await response.json()
       setResult(data)
-    } catch (err) {
+    } catch {
       setError("เกิดข้อผิดพลาดในการสแกน")
     } finally {
       setLoading(false)
@@ -447,7 +449,6 @@ export default function ScannerPage() {
                       <option value={30}>ทุก 30 นาที</option>
                     </select>
                   </div>
-
                   <div className="space-y-3">
                     <Label className="text-slate-700 font-semibold">สถานะระบบ</Label>
                     <div
@@ -484,7 +485,6 @@ export default function ScannerPage() {
                       </Badge>
                     ))}
                   </div>
-
                   <div className="flex gap-2">
                     <Input
                       type="text"
@@ -582,11 +582,9 @@ export default function ScannerPage() {
                           </Badge>
                           <div className="text-3xl font-bold text-slate-800">{result.score}%</div>
                         </div>
-
                         <div className="text-sm text-slate-600 mb-3 break-all font-mono bg-slate-100 px-3 py-2 rounded-lg">
                           {result.url}
                         </div>
-
                         <div className="flex flex-wrap gap-2 mb-3">
                           {result.details.suspiciousKeywords.map((keyword, index) => (
                             <Badge
@@ -597,7 +595,6 @@ export default function ScannerPage() {
                             </Badge>
                           ))}
                         </div>
-
                         <div className="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded inline-block">
                           {new Date(result.timestamp).toLocaleString("th-TH")}
                         </div>

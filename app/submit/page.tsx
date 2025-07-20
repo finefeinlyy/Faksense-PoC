@@ -23,13 +23,19 @@ import {
   ArrowLeft,
 } from "lucide-react"
 
+interface SubmitResult {
+  caseId: string
+  status: string
+  message: string
+}
+
 export default function Submit() {
   const [url, setUrl] = useState("")
   const [reporterName, setReporterName] = useState("")
   const [description, setDescription] = useState("")
   const [evidence, setEvidence] = useState<File[]>([])
   const [loading, setLoading] = useState(false)
-  const [result, setResult] = useState<any>(null)
+  const [result, setResult] = useState<SubmitResult | null>(null)
   const [error, setError] = useState("")
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -49,6 +55,7 @@ export default function Submit() {
       formData.append("url", url)
       formData.append("reporterName", reporterName)
       formData.append("description", description)
+
       evidence.forEach((file, index) => {
         formData.append(`evidence_${index}`, file)
       })
@@ -70,8 +77,9 @@ export default function Submit() {
       setReporterName("")
       setDescription("")
       setEvidence([])
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "เกิดข้อผิดพลาดที่ไม่ทราบสาเหตุ"
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }
@@ -88,8 +96,8 @@ export default function Submit() {
         {/* Back Button */}
         <div className="flex justify-start">
           <Link href="/">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               className="bg-white/80 backdrop-blur-sm border border-white/30 shadow-lg hover:bg-white/90 hover:shadow-xl transition-all duration-300 rounded-xl px-6 py-3"
             >
               <ArrowLeft className="h-5 w-5 mr-2" />
@@ -279,7 +287,9 @@ export default function Submit() {
                     >
                       คลิกเพื่อเลือกไฟล์
                     </label>
-                    <p className="text-sm text-slate-500 mt-2 font-medium">รองรับไฟล์: JPG, PNG, GIF (สูงสุด 5MB ต่อไฟล์)</p>
+                    <p className="text-sm text-slate-500 mt-2 font-medium">
+                      รองรับไฟล์: JPG, PNG, GIF (สูงสุด 5MB ต่อไฟล์)
+                    </p>
                   </div>
                 </div>
                 {evidence.length > 0 && (
@@ -340,19 +350,22 @@ export default function Submit() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {["ประวัติการเปลี่ยนชื่อเพจ", "ความสัมพันธ์ของยอด Like/Comment", "เนื้อหาที่โพสต์และคอมเมนต์", "รูปแบบการหลอกลวง"].map(
-                  (item, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center space-x-3 p-3 bg-gradient-to-r from-slate-50 to-white rounded-lg border border-slate-200"
-                    >
-                      <div className="p-1 bg-blue-100 rounded-full">
-                        <CheckCircle className="h-4 w-4 text-blue-600" />
-                      </div>
-                      <span className="text-slate-700 font-medium">{item}</span>
+                {[
+                  "ประวัติการเปลี่ยนชื่อเพจ",
+                  "ความสัมพันธ์ของยอด Like/Comment",
+                  "เนื้อหาที่โพสต์และคอมเมนต์",
+                  "รูปแบบการหลอกลวง"
+                ].map((item, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center space-x-3 p-3 bg-gradient-to-r from-slate-50 to-white rounded-lg border border-slate-200"
+                  >
+                    <div className="p-1 bg-blue-100 rounded-full">
+                      <CheckCircle className="h-4 w-4 text-blue-600" />
                     </div>
-                  ),
-                )}
+                    <span className="text-slate-700 font-medium">{item}</span>
+                  </div>
+                ))}
               </div>
             </CardContent>
           </Card>

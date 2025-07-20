@@ -26,7 +26,7 @@ interface ReviewLog {
 }
 
 // Mock database for review logs
-let mockReviewLogs: ReviewLog[] = [
+const mockReviewLogs: ReviewLog[] = [
   {
     id: '132458',
     incidentTime: '2025-07-02T16:13:12Z',
@@ -134,7 +134,7 @@ let mockReviewLogs: ReviewLog[] = [
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
-    
+
     // Get filter parameters
     const severity = searchParams.get('severity') || 'all';
     const status = searchParams.get('status') || 'all';
@@ -233,12 +233,11 @@ export async function GET(request: NextRequest) {
         hasMore: offset + limit < filteredLogs.length
       }
     });
-
   } catch (error) {
     console.error('Error fetching review logs:', error);
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: 'Internal server error',
         message: 'ไม่สามารถดึงข้อมูล review logs ได้ในขณะนี้'
       },
@@ -254,8 +253,8 @@ export async function POST(request: NextRequest) {
 
     if (!logId || !decision) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Log ID and decision are required',
           message: 'กรุณาระบุรหัส log และการตัดสินใจ'
         },
@@ -266,8 +265,8 @@ export async function POST(request: NextRequest) {
     const logIndex = mockReviewLogs.findIndex(l => l.id === logId);
     if (logIndex === -1) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Log not found',
           message: 'ไม่พบ log ที่ระบุ'
         },
@@ -289,7 +288,6 @@ export async function POST(request: NextRequest) {
           reviewerNotes: notes || 'อนุมัติการดำเนินการ'
         };
         break;
-
       case 'reject':
         mockReviewLogs[logIndex] = {
           ...mockReviewLogs[logIndex],
@@ -300,7 +298,6 @@ export async function POST(request: NextRequest) {
           reviewerNotes: notes || 'ปฏิเสธ - เป็น false positive'
         };
         break;
-
       case 'escalate':
         mockReviewLogs[logIndex] = {
           ...mockReviewLogs[logIndex],
@@ -311,11 +308,10 @@ export async function POST(request: NextRequest) {
           reviewerNotes: notes || 'ส่งต่อให้ผู้เชี่ยวชาญตรวจสอบเพิ่มเติม'
         };
         break;
-
       default:
         return NextResponse.json(
-          { 
-            success: false, 
+          {
+            success: false,
             error: 'Invalid decision',
             message: 'การตัดสินใจไม่ถูกต้อง'
           },
@@ -334,12 +330,11 @@ export async function POST(request: NextRequest) {
       message: 'ดำเนินการตรวจสอบเรียบร้อยแล้ว',
       log: mockReviewLogs[logIndex]
     });
-
   } catch (error) {
     console.error('Error processing review:', error);
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: 'Internal server error',
         message: 'ไม่สามารถดำเนินการตรวจสอบได้ในขณะนี้'
       },
@@ -355,8 +350,8 @@ export async function PUT(request: NextRequest) {
 
     if (!logId) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Log ID is required',
           message: 'กรุณาระบุรหัส log'
         },
@@ -367,8 +362,8 @@ export async function PUT(request: NextRequest) {
     const logIndex = mockReviewLogs.findIndex(l => l.id === logId);
     if (logIndex === -1) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Log not found',
           message: 'ไม่พบ log ที่ระบุ'
         },
@@ -391,12 +386,11 @@ export async function PUT(request: NextRequest) {
       message: 'อัพเดทข้อมูลเรียบร้อยแล้ว',
       log: mockReviewLogs[logIndex]
     });
-
   } catch (error) {
     console.error('Error updating log:', error);
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: 'Internal server error',
         message: 'ไม่สามารถอัพเดทข้อมูลได้ในขณะนี้'
       },
@@ -414,8 +408,8 @@ export async function DELETE(request: NextRequest) {
 
     if (!logId) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Log ID is required for export',
           message: 'กรุณาระบุรหัส log สำหรับการส่งออก'
         },
@@ -426,8 +420,8 @@ export async function DELETE(request: NextRequest) {
     const log = mockReviewLogs.find(l => l.id === logId);
     if (!log) {
       return NextResponse.json(
-        { 
-          success: false, 
+        {
+          success: false,
           error: 'Log not found',
           message: 'ไม่พบ log ที่ระบุ'
         },
@@ -451,12 +445,11 @@ export async function DELETE(request: NextRequest) {
         reviewedBy: log.reviewedBy
       }
     });
-
   } catch (error) {
     console.error('Error generating export:', error);
     return NextResponse.json(
-      { 
-        success: false, 
+      {
+        success: false,
         error: 'Internal server error',
         message: 'ไม่สามารถสร้างรายงานได้ในขณะนี้'
       },

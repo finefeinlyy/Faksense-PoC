@@ -1,5 +1,46 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+// Define interfaces for type safety
+interface SubmissionData {
+  date: string
+  count: number
+  high_risk: number
+}
+
+interface RiskDistribution {
+  range: string
+  count: number
+  label: string
+}
+
+interface RiskScores {
+  average: number
+  distribution: RiskDistribution[]
+}
+
+interface AIPerformance {
+  accuracy: number
+  falsePositives: number
+  falseNegatives: number
+  avgProcessingTime: number
+  decoySuccessRate: number
+}
+
+interface ThreatPattern {
+  pattern: string
+  count: number
+  trend: string
+  riskScore: number
+  examples: string[]
+}
+
+interface AnalyticsData {
+  submissions?: SubmissionData[]
+  riskScores?: RiskScores
+  aiPerformance?: AIPerformance
+  topThreats?: ThreatPattern[]
+}
+
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url)
   const period = searchParams.get('period') || '7d'
@@ -8,7 +49,7 @@ export async function GET(request: NextRequest) {
   try {
     // Generate analytics data based on period
     const analyticsData = generateAnalyticsData(period, metric)
-
+    
     return NextResponse.json({
       success: true,
       period,
@@ -24,9 +65,9 @@ export async function GET(request: NextRequest) {
   }
 }
 
-function generateAnalyticsData(period: string, metric: string) {
+function generateAnalyticsData(period: string, metric: string): AnalyticsData {
   const days = period === '30d' ? 30 : period === '7d' ? 7 : 1
-  const analytics: any = {}
+  const analytics: AnalyticsData = {}
 
   if (metric === 'all' || metric === 'submissions') {
     analytics.submissions = Array.from({ length: days }, (_, i) => ({
@@ -60,23 +101,23 @@ function generateAnalyticsData(period: string, metric: string) {
 
   if (metric === 'all' || metric === 'top-threats') {
     analytics.topThreats = [
-      { 
-        pattern: 'Investment Scams', 
-        count: 145, 
+      {
+        pattern: 'Investment Scams',
+        count: 145,
         trend: '+12%',
         riskScore: 88,
         examples: ['Bitcoin investment', 'Forex trading', 'Stock tips']
       },
-      { 
-        pattern: 'Fake Banking', 
-        count: 98, 
+      {
+        pattern: 'Fake Banking',
+        count: 98,
         trend: '+8%',
         riskScore: 92,
         examples: ['SCB fake page', 'Kbank phishing', 'Banking OTP scam']
       },
-      { 
-        pattern: 'Shopping Scams', 
-        count: 87, 
+      {
+        pattern: 'Shopping Scams',
+        count: 87,
         trend: '-5%',
         riskScore: 76,
         examples: ['Fake iPhone sale', 'Luxury bag scam', 'Electronics fraud']

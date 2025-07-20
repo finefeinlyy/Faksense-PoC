@@ -5,7 +5,7 @@ import { Inter } from "next/font/google"
 import Link from "next/link"
 import Head from "next/head"
 import { Shield, BarChart3, Search, Activity, Users, ChevronRight, Sun, Moon } from "lucide-react"
-import { Suspense, useState, useEffect } from "react"
+import { Suspense, useState, useEffect, useCallback } from "react"
 import { usePathname } from "next/navigation"
 
 const inter = Inter({ subsets: ["latin"] })
@@ -22,7 +22,7 @@ export default function ClientLayout({
   const [isDarkMode, setIsDarkMode] = useState(false)
 
   // ตั้งค่า title ตามหน้าที่เปิดอยู่
-  const getPageTitle = () => {
+  const getPageTitle = useCallback(() => {
     switch (pathname) {
       case "/dashboard":
         return "ศูนย์ควบคุม - FakeSense"
@@ -41,12 +41,12 @@ export default function ClientLayout({
       default:
         return "FakeSense - ระบบตรวจสอบเพจต้องสงสัย"
     }
-  }
+  }, [pathname])
 
   // อัปเดต title เมื่อเปลี่ยนหน้า
   useEffect(() => {
     document.title = getPageTitle()
-  }, [pathname])
+  }, [pathname, getPageTitle])
 
   return (
     <html lang="th" className="h-full">

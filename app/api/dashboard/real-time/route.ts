@@ -1,9 +1,33 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET(request: NextRequest) {
+// Define interfaces for real-time data
+interface Alert {
+  id: number
+  type: string
+  message: string
+  timestamp: string
+  severity: 'low' | 'info' | 'high' | 'critical'
+}
+
+interface Performance {
+  cpuUsage: number
+  memoryUsage: number
+  apiResponseTime: number
+}
+
+interface RealTimeData {
+  timestamp: string
+  activeScans: number
+  queueSize: number
+  systemStatus: string
+  alerts: Alert[]
+  performance: Performance
+}
+
+export async function GET() {
   try {
     // Simulate real-time data
-    const realTimeData = {
+    const realTimeData: RealTimeData = {
       timestamp: new Date().toISOString(),
       activeScans: Math.floor(Math.random() * 10) + 5,
       queueSize: Math.floor(Math.random() * 25) + 10,
