@@ -1,36 +1,51 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Faksense – Cyber Warrior 2025 Hackathon (KMUTT x Thai Cyber Police)
 
-## Getting Started
+Faksense is a **Proof of Concept (PoC)** management dashboard developed for the **Cyber Warrior 2025 Hackathon**, in collaboration with **King Mongkut’s University of Technology Thonburi (KMUTT)** and the **Thai Cyber Police**.  
 
-First, run the development server:
+The dashboard provides centralized management and monitoring for **AI-powered undercover purchase operations (AI ล่อซื้อ)**, which is one of Faksense’s flagship cybersecurity products. This system is designed to support law enforcement in combating **fraud, scams, and illicit online trading activities** in Thailand.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🔹 Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### ✅ **Management Dashboard**
+- Real-time monitoring of AI undercover operations.
+- Centralized control panel to start, pause, or stop undercover purchase missions.
+- Automated reporting with data visualization for decision-making.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### ✅ **AI Undercover Purchase (AI ล่อซื้อ)**
+- AI-driven agents simulate legitimate buyers to interact with fraudsters.
+- Automatic conversation logging and evidence collection to support legal proceedings.
+- Risk scoring and behavior analysis of suspicious sellers.
 
-## Learn More
+### ✅ **Evidence & Case Management**
+- Secure storage and organization of collected evidence.
+- Integrated risk level indicators for prioritizing cases.
+- Support for exporting reports for legal documentation.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🔹 Status
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This is an **early-stage PoC** built exclusively for the **Cyber Warrior 2025 Hackathon**.  
+Future improvements may include:
+- Integration with Thai national cybercrime databases.
+- Multi-language support for cross-border scam investigations.
+- Advanced behavioral anomaly detection for scam pattern prediction.
 
-## Deploy on Vercel
+---
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔹 Team
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Developed by **Team fight for นายช** for **Cyber Warrior 2025** under the collaboration of:
+- **King Mongkut’s University of Technology Thonburi (KMUTT)**
+- **Thai Cyber Police (Cyber Crime Investigation Bureau)**
+
+---
+
+## 🔹 Disclaimer
+
+This PoC is built **solely for research and educational purposes** in the Cyber Warrior 2025 Hackathon.  
+It is **not intended for commercial or unauthorized investigative use** outside approved law enforcement operations.
+
+---
